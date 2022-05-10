@@ -31,7 +31,7 @@ public class GameField extends JPanel implements ActionListener{
     private boolean down = false;
     private boolean inGame = true;
 
-    public GameField(){
+    public GameField(){ //конструктор класса
         setBackground(Color.darkGray);
         loadImages();
         initGame();
@@ -39,23 +39,23 @@ public class GameField extends JPanel implements ActionListener{
         setFocusable(true);
     }
 
-    public void initGame(){
+    public void initGame(){ //инициализация игры
         dots = 3;
         for (int i = 0; i < dots; i++) {
-            x[i] = 48 - i*DOT_SIZE;
-            y[i] = 48;
+            x[i] = SIZE/2 - i*DOT_SIZE;
+            y[i] = SIZE/2;
         }
         timer = new Timer(125,this);
         timer.start();
         createApple();
     }
 
-    public void createApple(){
-        appleX = new Random().nextInt(20)*DOT_SIZE;
-        appleY = new Random().nextInt(20)*DOT_SIZE;
+    public void createApple(){ //генерирование яблока
+        appleX = new Random().nextInt(50)*DOT_SIZE;
+        appleY = new Random().nextInt(50)*DOT_SIZE;
     }
 
-    public void loadImages(){
+    public void loadImages(){ //загрузка картинок
         ImageIcon iia = new ImageIcon("apple.png");
         apple = iia.getImage();
         ImageIcon iid = new ImageIcon("dot.png");
@@ -65,13 +65,12 @@ public class GameField extends JPanel implements ActionListener{
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        if(inGame){
+        if(inGame){                                 //рисовка
             g.drawImage(apple,appleX,appleY,this);
             for (int i = 0; i < dots; i++) {
                 g.drawImage(dot,x[i],y[i],this);
             }
-        } else{
-
+        } else{                                     // gameover
             String str = "YOU DIED!";
             String bezdarnost = "бездарность...";
             String StringScore = "Your score is ";
@@ -95,24 +94,35 @@ public class GameField extends JPanel implements ActionListener{
     }
 
 
-    public void move(){
+    public void move(){                         // движение
+
+        //для всего туловища
         for (int i = dots; i > 0; i--) {
             x[i] = x[i-1];
             y[i] = y[i-1];
         }
+
+
+        // для головы
         if(left){
             x[0] -= DOT_SIZE;
         }
+
         if(right){
             x[0] += DOT_SIZE;
-        } if(up){
+        }
+
+        if(up){
             y[0] -= DOT_SIZE;
-        } if(down){
+        }
+
+        if(down){
             y[0] += DOT_SIZE;
         }
     }
 
     public void checkApple(){
+        //проверка яблока
         if(x[0] == appleX && y[0] == appleY){
             dots++;
             score++;
@@ -121,6 +131,7 @@ public class GameField extends JPanel implements ActionListener{
     }
 
     public void checkCollisions(){
+        //проверка колизий
         for (int i = dots; i >0 ; i--) {
             if(i > 4 && x[0] == x[i] && y[0] == y[i]){
                 inGame = false;
@@ -151,39 +162,40 @@ public class GameField extends JPanel implements ActionListener{
             checkApple();
             checkCollisions();
             move();
-
         }
         repaint();
     }
 
+    //класс проверки нажатий
     class FieldKeyListener extends KeyAdapter{
+
+        //метод проверка нажатий
         @Override
         public void keyPressed(KeyEvent e) {
+
             super.keyPressed(e);
             int key = e.getKeyCode();
-            if(key == KeyEvent.VK_LEFT && !right){
+            if((key == KeyEvent.VK_LEFT || key == KeyEvent.VK_A) && !right){
                 left = true;
                 up = false;
                 down = false;
             }
-            if(key == KeyEvent.VK_RIGHT && !left){
+            if((key == KeyEvent.VK_RIGHT || key == KeyEvent.VK_D) && !left){
                 right = true;
                 up = false;
                 down = false;
             }
 
-            if(key == KeyEvent.VK_UP && !down){
+            if((key == KeyEvent.VK_UP || key == KeyEvent.VK_W) && !down){
                 right = false;
                 up = true;
                 left = false;
             }
-            if(key == KeyEvent.VK_DOWN && !up){
+            if((key == KeyEvent.VK_DOWN || key == KeyEvent.VK_S) && !up){
                 right = false;
                 down = true;
                 left = false;
             }
         }
     }
-
-
 }
