@@ -94,7 +94,7 @@ public class GameField extends JPanel implements ActionListener{
     }
 
 
-    public void move(){                         // движение
+    public void move(){        // движение
 
         //для всего туловища
         for (int i = dots; i > 0; i--) {
@@ -122,7 +122,7 @@ public class GameField extends JPanel implements ActionListener{
     }
 
     public void checkApple(){
-        //проверка яблока
+        //проверка ан поедание яблока
         if(x[0] == appleX && y[0] == appleY){
             dots++;
             score++;
