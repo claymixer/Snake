@@ -21,6 +21,7 @@ public class GameField extends JPanel implements ActionListener{
     private final int[] y = new int[ALL_DOTS];
 
     private int dots;
+    private int score = 0;
 
     private Timer timer;
 
@@ -29,7 +30,6 @@ public class GameField extends JPanel implements ActionListener{
     private boolean up = false;
     private boolean down = false;
     private boolean inGame = true;
-
 
     public GameField(){
         setBackground(Color.darkGray);
@@ -73,12 +73,27 @@ public class GameField extends JPanel implements ActionListener{
         } else{
 
             String str = "YOU DIED!";
-            Font f = new Font("Times New Roman",Font.BOLD,42);
+            String bezdarnost = "бездарность...";
+            String StringScore = "Your score is ";
+            StringScore += Integer.toString(score);
+            Font f1 = new Font("Times New Roman",Font.CENTER_BASELINE,14);
+            Font f2 = new Font("Times New Roman",Font.BOLD,42);
+            Font f3 = new Font("Times New Roman",Font.BOLD,21);
             g.setColor(Color.red);
-            g.setFont(f);
+
+            g.setFont(f2);
             g.drawString(str,SIZE/2 - 110,SIZE/2);
+
+            g.setFont(f3);
+            g.drawString(StringScore,SIZE/2-60,SIZE/2+SIZE/4);
+
+            g.setFont(f1);
+            g.drawString(bezdarnost,SIZE/2-40,SIZE/2+SIZE/32);
+
         }
+
     }
+
 
     public void move(){
         for (int i = dots; i > 0; i--) {
@@ -100,6 +115,7 @@ public class GameField extends JPanel implements ActionListener{
     public void checkApple(){
         if(x[0] == appleX && y[0] == appleY){
             dots++;
+            score++;
             createApple();
         }
     }

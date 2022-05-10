@@ -3,7 +3,6 @@ import javax.swing.*;
 public class MainWindow extends JFrame {
 
     public MainWindow(){
-
         setTitle("Snake Souls"); // название
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE); // возможность закрытия
         setSize(800,825); // размер
