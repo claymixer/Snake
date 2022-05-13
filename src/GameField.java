@@ -45,7 +45,7 @@ public class GameField extends JPanel implements ActionListener{
             x[i] = SIZE/2 - i*DOT_SIZE;
             y[i] = SIZE/2;
         }
-        timer = new Timer(125,this);
+        timer = new Timer(62,this);
         timer.start();
         createApple();
     }
@@ -75,7 +75,7 @@ public class GameField extends JPanel implements ActionListener{
             String bezdarnost = "бездарность...";
             String StringScore = "Your score is ";
             StringScore += Integer.toString(score);
-            Font f1 = new Font("Times New Roman",Font.CENTER_BASELINE,14);
+            Font f1 = new Font("Times New Roman",Font.BOLD,14);
             Font f2 = new Font("Times New Roman",Font.BOLD,42);
             Font f3 = new Font("Times New Roman",Font.BOLD,21);
             g.setColor(Color.red);
